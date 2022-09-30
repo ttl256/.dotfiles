@@ -1,0 +1,154 @@
+#!/bin/zsh
+alias sudo="sudo "
+case $(uname -s) in
+	Darwin | FreeBSD) alias ls="ls -Ghp";;
+	Linux) alias ls="ls --color -hp";;
+esac
+alias la="ls -ltr"
+alias ll="ls -lAtr"
+alias gp="grep -E -inH --color=auto"
+alias df="df -ha"
+alias cp="cp -v"
+alias mv="mv -v"
+alias tmuxl="tmux ls"
+alias tmuxa="tmux attach -t"
+alias tmuxk="tmux kill-session -t"
+alias tmuxs="tmux new-session -s"
+
+function ff { ll $1 | grep -E -i --color=auto $2 }
+function ffind { find $1 -type f -exec grep -F -inH --color=auto $2 {} + 2> /dev/null }
+function efind { find $1 -type f -exec grep -E -inH --color=auto $2 {} + 2> /dev/null }
+
+function tping { ping "$@" | while read pong; do echo "$(date +'%T'): $pong"; done }
+function tping6 { ping6 "$@" | while read pong; do echo "$(date +'%T'): $pong"; done }
+
+if [ $(uname -s) = "Darwin" ] || [ $(uname -s) = "FreeBSD" ]; then
+function mping {
+PYTHON_ARG="$@" python3 - <<END
+"""
+There's ping and ping6 for BSD. Let's solve this unpleasantness.
+"""
+import sys
+import os
+import subprocess
+import ipaddress
+import re
+
+class Host:
+	def __init__(self, target):
+		self.target = target
+		self.ip_addr = None
+		self.addresses = None
+		self.fqdn = None
+		self.dns_output = ""
+		self.dns_cmd = ""
+		try:
+			self.ip_addr = ipaddress.ip_address(self.target)
+		except ValueError:
+			self.fqdn = target
+		else:
+			self.addresses = []
+			self.addresses.append(ipaddress.ip_address(self.target))
+
+		if self.fqdn is not None:
+			self.addresses, self.dns_output = self.resolve_fqdn()
+
+	def resolve_fqdn(self):
+		result = ""
+		# Don't use ANY
+		for type_ in ("A", "AAAA"):
+			cmd = f"dig -t {type_} +noall +answer {self.fqdn}"
+			result += "> " + cmd + "\n"
+			output = subprocess.run(cmd.split(), stdout=subprocess.PIPE, encoding="utf-8")
+			result += output.stdout + "\n"
+		regex = re.compile(r"IN\t(A|AAAA)\t(?P<ip>.*)")
+		addresses = []
+		for line in result.split("\n"):
+			line = line.strip()
+			if m := regex.search(line):
+				ip_obj = ipaddress.ip_address(m.group("ip"))
+				addresses.append(ip_obj)
+		return addresses, result.strip()
+
+	def get_ip_address(self, version = None):
+		version_dict = {"4": ipaddress.IPv4Address, "6": ipaddress.IPv6Address}
+		if not self.addresses:
+			return None
+		if version is None:
+			return self.addresses[0]
+		for addr in self.addresses:
+			if isinstance(addr, version_dict[version]):
+				return str(addr)
+
+def route(args):
+	args = args.split()
+	target = args.pop()
+	host = Host(target)
+	cmds = []
+	if host.get_ip_address() is None:
+		raise ValueError(f"Couldn't resolve {host.target}\n{host.dns_output}")
+	if "-4" in args:
+		ip = host.get_ip_address("4")
+		if ip is None:
+			raise ValueError(f"{host.target} doesn't have IPv4 address\n{host.dns_output}")
+		args.remove("-4")
+		cmd = f"ping {' '.join(i for i in args)}"
+		cmds.append((cmd, ip))
+	elif "-6" in args:
+		ip = host.get_ip_address("6")
+		if ip is None:
+			raise ValueError(f"{host.target} doesn't have IPv6 address\n{host.dns_output}")
+		args.remove("-6")
+		cmd = f"ping6 {' '.join(i for i in args)}"
+		cmds.append((cmd, ip))
+	else:
+		ipv6 = host.get_ip_address("6")
+		ipv4 = host.get_ip_address("4")
+		if not (ipv6 or ipv4):
+			raise ValueError(f"{host.target} doesn't have an IP address")
+
+		if ipv6:
+			cmd = f"ping6 {' '.join(i for i in args)}"
+			cmds.append((cmd, ipv6))
+		if ipv4:
+			cmd = f"ping {' '.join(i for i in args)}"
+			cmds.append((cmd, ipv4))
+
+	return host, cmds
+
+def main(args):
+	try:
+		host, cmds = route(args)
+		print(host.dns_output)
+	except ValueError as e:
+		sys.exit(e)
+	for cmd, ip in cmds:
+		cmd = f"{cmd} {ip}"
+		print(f"> {cmd}")
+		try:
+			result = subprocess.run(cmd.split(), stderr=subprocess.PIPE, encoding="utf-8")
+			if result.stderr:
+				print(result.stderr)
+			if result.returncode == 0:
+				break
+		except KeyboardInterrupt:
+			sys.exit()
+
+if __name__ == "__main__":
+	main(os.environ["PYTHON_ARG"])
+END
+}
+fi
+
+mdig () {
+	# Don't use ANY
+	for t in A AAAA NS MX; do
+		cmd="dig -t $t +noall +answer "$@""
+		echo "$cmd"
+		eval "$cmd"
+	done
+}
+
+alias cfg='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
+[ "$EDITOR" = "nvim" ] && alias vim="nvim"
