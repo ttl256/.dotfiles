@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# https://news.ycombinator.com/item?id=11071754
+# https://github.com/Siilwyn/my-dotfiles/tree/master/.my-dotfiles
+# https://www.atlassian.com/git/tutorials/dotfiles
+
 DOTFILES_DIR="$HOME/.dotfiles"
 TMP_DOTFILES_DIR="$HOME/.dotfiles.tmp"
 CMD="git --git-dir=$DOTFILES_DIR --work-tree=$HOME"
