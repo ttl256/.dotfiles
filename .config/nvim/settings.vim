@@ -67,7 +67,11 @@ else
 endif
 
 set background=dark
-colorscheme solarized8
+if has('nvim')
+	silent colorscheme solarized8
+else
+	silent colorscheme solarized
+endif
 
 " highlight ColorColumn guibg=#403f3f
 "
