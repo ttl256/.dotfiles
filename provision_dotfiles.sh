@@ -14,3 +14,8 @@ git clone --separate-git-dir="$DOTFILES_DIR" https://github.com/ttl256/.dotfiles
 rsync --recursive --verbose --exclude '.git' "$TMP_DOTFILES_DIR/" "$HOME/"
 rm -r "$TMP_DOTFILES_DIR"
 eval "$CMD config status.showUntrackedFiles no"
+if [ ! -d "$HOME/.config/nvim/bundle/Vundle.vim" ]; then
+	mkdir -p "$HOME/.config/nvim/bundle/Vundle.vim"
+	git clone https://github.com/VundleVim/Vundle.vim.git "$HOME/.config/nvim/bundle/Vundle.vim"
+	vim +PluginInstall +qall
+fi
