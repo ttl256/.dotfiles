@@ -57,4 +57,3 @@ _comp_options+=(globdots) # With hidden files
 [ -f $ZDOTDIR/completion.zsh ] && source $ZDOTDIR/completion.zsh
 
 type direnv &> /dev/null && eval "$(direnv hook zsh)"
-type pyenv &> /dev/null && eval "$(pyenv init -)"
