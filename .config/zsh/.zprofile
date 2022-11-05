@@ -11,3 +11,9 @@ export VISUAL=$EDITOR
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 type pyenv &> /dev/null && eval "$(pyenv init -)"
+
+# # GNU utils for Doom Emacs
+# export PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH"
+# export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+# Add Doom Emacs doctor to path
+export PATH="$HOME/.emacs.d/bin:$PATH"

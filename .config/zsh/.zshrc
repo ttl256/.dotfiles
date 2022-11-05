@@ -38,7 +38,7 @@ setopt prompt_subst
 # Run vcs_info just before a prompt is displayed (precmd)
 add-zsh-hook precmd vcs_info
 grep -q ttl256 <<< $(uname -n) && col="{yellow}" || col="{red}"
-PROMPT="%F{green}%n%f%F$col@%m%f in %F{cyan}%2d%f \$vcs_info_msg_0_"$'\n'"%# "
+PROMPT="%F{green}%n%f%F$col@%m%f in %F{cyan}%2d%f \$vcs_info_msg_0_"$'\n'"%(!.#.$) "
 # Add a prompt on the right with vcs info
 #RPROMPT=\$vcs_info_msg_0_
 # Enable checking for (un)staged changes, enabling use of %u and %c

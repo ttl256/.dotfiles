@@ -22,6 +22,22 @@ function efind { find $1 -type f -exec grep -E -inH --color=auto $2 {} + 2> /dev
 function tping { ping "$@" | while read pong; do echo "$(date +'%T'): $pong"; done }
 function tping6 { ping6 "$@" | while read pong; do echo "$(date +'%T'): $pong"; done }
 
+function ifconfig {
+PYTHON_ARG="$@" python3 - <<END
+import os
+import re
+import subprocess
+def mask_hex_to_length(h):
+	return sum(int(i) for i in "{:b}".format(int(h, 16)))
+args = os.environ["PYTHON_ARG"]
+cmd = f"/sbin/ifconfig {args}"
+output = subprocess.run(cmd.split(), stdout=subprocess.PIPE, encoding="utf-8")
+if output.stdout:
+	regex = re.compile(r"(netmask) 0x([0-9a-f]{8})")
+	print(regex.sub(lambda m: f"{m.group(1)} {mask_hex_to_length(m.group(2))}", output.stdout), end="")
+END
+}
+
 if [ $(uname -s) = "Darwin" ] || [ $(uname -s) = "FreeBSD" ]; then
 function mping {
 PYTHON_ARG="$@" python3 - <<END
