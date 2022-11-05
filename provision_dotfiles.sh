@@ -17,5 +17,5 @@ eval "$CMD config status.showUntrackedFiles no"
 if [ ! -d "$HOME/.config/nvim/bundle/Vundle.vim" ]; then
 	mkdir -p "$HOME/.config/nvim/bundle/Vundle.vim"
 	git clone https://github.com/VundleVim/Vundle.vim.git "$HOME/.config/nvim/bundle/Vundle.vim"
-	vim +PluginInstall +qall
+	echo | echo | vim +PluginUpdate +qall &>/dev/null
 fi
