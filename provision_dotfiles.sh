@@ -16,7 +16,8 @@ rsync -a --verbose --exclude '.git' "$TMP_DOTFILES_DIR/" "$HOME/"
 rm -r "$TMP_DOTFILES_DIR"
 eval "$CMD config status.showUntrackedFiles no"
 mkdir -p "$HOME/.config/nvim/bundle/Vundle.vim"
-if [ -d "$HOME/.config/nvim/bundle/Vundle.vim/.git" ] then
+if [ -d "$HOME/.config/nvim/bundle/Vundle.vim/.git" ]
+then
 	cd "$HOME/.config/nvim/bundle/Vundle.vim"
 	git pull
 	cd
