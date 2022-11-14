@@ -17,3 +17,4 @@ type pyenv &> /dev/null && eval "$(pyenv init -)"
 # export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 # Add Doom Emacs doctor to path
 export PATH="$HOME/.emacs.d/bin:$PATH"
+[ -f $ZDOTDIR/specific_profile ] && source $ZDOTDIR/specific_profile
