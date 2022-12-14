@@ -15,7 +15,7 @@ alias tmuxa="tmux attach -t"
 alias tmuxk="tmux kill-session -t"
 alias tmuxs="tmux new-session -s"
 
-function ff { ll $1 | grep -E -i --color=auto $2 }
+function ff { ll $1 | awk -v name="$2" 'tolower($NF) ~ name {print}' }
 function ffind { find $1 -type f -exec grep -F -inH --color=auto $2 {} + 2> /dev/null }
 function efind { find $1 -type f -exec grep -E -inH --color=auto $2 {} + 2> /dev/null }
 
