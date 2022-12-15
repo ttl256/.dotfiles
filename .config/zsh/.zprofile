@@ -12,6 +12,8 @@ export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 type pyenv &> /dev/null && eval "$(pyenv init -)"
 
+export HISTTIMEFORMAT="[%F %T] "
+
 # # GNU utils for Doom Emacs
 # export PATH="/opt/homebrew/opt/findutils/libexec/gnubin:$PATH"
 # export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"

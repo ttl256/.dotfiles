@@ -3,9 +3,8 @@
 # HISTORY #
 #
 HISTFILE="$ZDOTDIR/.zsh_history"
-HISTSIZE=2000
-SAVEHIST=2000
-HIST_STAMPS="%d/%m/%y %T"
+HISTSIZE=10000
+SAVEHIST=100000
 setopt share_history
 setopt append_history
 # .zsh_history is updated on every command
@@ -18,6 +17,9 @@ setopt hist_find_no_dups
 setopt hist_ignore_dups
 # Verify command when using history expansion like 'sudo !!'
 setopt hist_verify
+# Prepend every entry in $HISTFILE with a timestamp
+# To see all history with timestamps call "history -E 0"
+setopt extended_history
 
 # Correction for mistyped commands
 setopt correct
