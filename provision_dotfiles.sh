@@ -15,13 +15,17 @@ git clone --separate-git-dir="$DOTFILES_DIR" https://github.com/ttl256/.dotfiles
 rsync -a --verbose --exclude '.git' "$TMP_DOTFILES_DIR/" "$HOME/"
 rm -r "$TMP_DOTFILES_DIR"
 eval "$CMD config status.showUntrackedFiles no"
-mkdir -p "$HOME/.config/nvim/bundle/Vundle.vim"
-if [ -d "$HOME/.config/nvim/bundle/Vundle.vim/.git" ]
+
+PLUGIN_MANAGER_DIR="$HOME/.config/nvim/bundle/vim-plug"
+PLUGIN_MANAGER_URL="https://github.com/junegunn/vim-plug.git"
+
+mkdir -p "$PLUGIN_MANAGER_DIR"
+if [ -d "$PLUGIN_MANAGER_DIR/.git" ]
 then
-	cd "$HOME/.config/nvim/bundle/Vundle.vim"
+	cd "$PLUGIN_MANAGER_DIR"
 	git pull
 	cd
 else
-	git clone https://github.com/VundleVim/Vundle.vim.git "$HOME/.config/nvim/bundle/Vundle.vim"
+	git clone "$PLUGIN_MANAGER_URL" "$PLUGIN_MANAGER_DIR"
 fi
 echo | echo | vim +PluginUpdate +qall &>/dev/null
