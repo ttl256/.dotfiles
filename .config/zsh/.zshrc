@@ -18,7 +18,7 @@ setopt hist_ignore_dups
 # Verify command when using history expansion like 'sudo !!'
 setopt hist_verify
 # Prepend every entry in $HISTFILE with a timestamp
-# To see all history with timestamps call "history -E 0"
+# To see all history with timestamps call "history -E 0" or "history -i 0" for ISO8601 format
 setopt extended_history
 
 # Correction for mistyped commands
