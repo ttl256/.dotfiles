@@ -45,12 +45,11 @@ PROMPT=""
 # PROMPT+="${(r:$COLUMNS::—:)}" # draw columns
 PROMPT+="%F{green}%n%f" # hostname
 PROMPT+="%F$col@%m%f" # machine
-PROMPT+=" in %F{cyan}%2d%f" # current directory
+PROMPT+=" %F{cyan}%2d%f" # current directory with one parent directory
 PROMPT+="\$vcs_info_msg_0_" # git support
+PROMPT+=" %*" #time
 PROMPT+=$'\n'
 PROMPT+="%(!.#.$) "
-
-RPROMPT="%*" # time
 
 # Add a prompt on the right with vcs info
 #RPROMPT=\$vcs_info_msg_0_
