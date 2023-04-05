@@ -40,7 +40,18 @@ setopt prompt_subst
 # Run vcs_info just before a prompt is displayed (precmd)
 add-zsh-hook precmd vcs_info
 grep -q ttl256 <<< $(uname -n) && col="{yellow}" || col="{red}"
-PROMPT="%F{green}%n%f%F$col@%m%f in %F{cyan}%2d%f \$vcs_info_msg_0_"$'\n'"%(!.#.$) "
+
+PROMPT=""
+# PROMPT+="${(r:$COLUMNS::—:)}" # draw columns
+PROMPT+="%F{green}%n%f" # hostname
+PROMPT+="%F$col@%m%f" # machine
+PROMPT+=" in %F{cyan}%2d%f" # current directory
+PROMPT+="\$vcs_info_msg_0_" # git support
+PROMPT+=$'\n'
+PROMPT+="%(!.#.$) "
+
+RPROMPT="%*" # time
+
 # Add a prompt on the right with vcs info
 #RPROMPT=\$vcs_info_msg_0_
 # Enable checking for (un)staged changes, enabling use of %u and %c
