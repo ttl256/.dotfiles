@@ -15,6 +15,7 @@ rsync -a --verbose --exclude '.git' "$TMP_DOTFILES_DIR/" "$HOME/"
 rm -r "$TMP_DOTFILES_DIR"
 eval "$CMD config status.showUntrackedFiles no"
 
+PLUGIN_CALL_FILE="$HOME/.config/nvim/plugins.vim"
 PLUGIN_MANAGER_DIR="$HOME/.config/nvim/bundle/Vundle.vim"
 PLUGIN_MANAGER_URL="https://github.com/VundleVim/Vundle.vim.git"
 
@@ -26,4 +27,4 @@ else
 	git clone "$PLUGIN_MANAGER_URL" "$PLUGIN_MANAGER_DIR"
 fi
 
-echo | echo | vim +PluginUpdate +qall &>/dev/null && echo "vim plugins are updated"
+vim -E -s -u "$PLUGIN_CALL_FILE" +PluginUpdate +qall
