@@ -66,13 +66,7 @@ else
 	set t_Co=256
 endif
 
-set background=dark
-if has('nvim')
-	silent colorscheme solarized8
-else
-	silent colorscheme solarized
-endif
-
+colorscheme codedark
 " highlight ColorColumn guibg=#403f3f
 "
 " set colorcolumn=+1
@@ -114,9 +108,8 @@ let g:ctrlp_cmd = 'CtrlPMixed'
 
 " Vim Airline themes
 let g:airline_powerline_fonts = 1
-let g:airline_theme='base16_solarized_dark'
 let g:airline#extensions#tmuxline#enabled = 1
-" let g:tmuxline_powerline_separators = 0
+let g:tmuxline_powerline_separators = 0
 let g:tmuxline_separators = {
     \ 'left' : '',
     \ 'left_alt': '>',
