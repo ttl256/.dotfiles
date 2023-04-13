@@ -21,10 +21,9 @@ PLUGIN_MANAGER_URL="https://github.com/VundleVim/Vundle.vim.git"
 mkdir -p "$PLUGIN_MANAGER_DIR"
 if [ -d "$PLUGIN_MANAGER_DIR/.git" ]
 then
-	cd "$PLUGIN_MANAGER_DIR"
-	git pull
-	cd
+	git -C "$PLUGIN_MANAGER_DIR" pull
 else
 	git clone "$PLUGIN_MANAGER_URL" "$PLUGIN_MANAGER_DIR"
 fi
-echo | echo | vim +PlugUpdate +qall &>/dev/null
+
+echo | echo | vim +PluginUpdate +qall &>/dev/null && echo "vim plugins are updated"
