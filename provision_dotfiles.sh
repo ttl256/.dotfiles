@@ -27,4 +27,4 @@ else
 	git clone "$PLUGIN_MANAGER_URL" "$PLUGIN_MANAGER_DIR"
 fi
 
-vim -E -s -u "$PLUGIN_CALL_FILE" +PluginUpdate +qall
+vim -E -s -u "$PLUGIN_CALL_FILE" +PluginUpdate +qall && echo "vim plugins are updated"

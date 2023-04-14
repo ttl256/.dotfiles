@@ -35,6 +35,8 @@ set undodir^=$HOME/tmp/undo//
 
 let mapleader=","
 set encoding=utf-8
+set tabstop=4
+set shiftwidth=4
 
 " Number lines in hybrid mode. Absolute + relative.
 set number relativenumber
