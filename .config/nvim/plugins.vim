@@ -14,11 +14,6 @@ Plugin 'vim-python/python-syntax'
 Plugin 'scrooloose/nerdtree'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'preservim/nerdcommenter'
-Plugin 'lifepillar/vim-solarized8'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'edkolev/tmuxline.vim'
 Plugin 'tomasiser/vim-code-dark'
 
 " All of your Plugins must be added before the following line

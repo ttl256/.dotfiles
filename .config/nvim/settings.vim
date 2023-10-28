@@ -108,28 +108,6 @@ let NERDTreeShowHidden=1
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlPMixed'
 
-" Vim Airline themes
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tmuxline#enabled = 1
-let g:tmuxline_powerline_separators = 0
-let g:tmuxline_separators = {
-    \ 'left' : '',
-    \ 'left_alt': '>',
-    \ 'right' : '',
-    \ 'right_alt' : '<',
-    \ 'space' : ' '}
-set noshowmode
-
-" Patch some airline symbols
-if !exists('g:airline_symbols')
-	let g:airline_symbols = {}
-endif
-" Remove arrows
-let g:airline_left_sep=''
-let g:airline_right_sep=''
-" Patch colon number since it doesn't render correctly
-let g:airline_symbols.colnr = "\u33c7"
-
 set completeopt=menu,menuone
 
 
