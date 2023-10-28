@@ -158,12 +158,27 @@ END
 fi
 
 mdig () {
+	digall_color_restore='\033[0m'
+	digall_color_light_green='\033[1;32m'
+	digall_color_light_blue='\033[1;34m'
+	digall_color_light_cyan='\033[1;36m'
 	# Don't use ANY
-	for t in A AAAA NS MX; do
+	for t in A AAAA NS; do
 		cmd="dig -t $t +noall +answer "$@""
-		echo "$cmd"
+		echo "${digall_color_light_green}$t:${digall_color_restore}${digall_color_light_cyan}"
 		eval "$cmd"
+		echo "${digall_color_restore}"
 	done
+}
+
+ssh() {
+    if [ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" = "tmux" ]; then
+        tmux rename-window "$(echo $* | cut -d . -f 1)"
+        command ssh "$@"
+        tmux set-window-option automatic-rename "on" 1>/dev/null
+    else
+        command ssh "$@"
+    fi
 }
 
 alias cfg='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'

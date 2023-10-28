@@ -15,6 +15,19 @@ rsync -a --verbose --exclude '.git' "$TMP_DOTFILES_DIR/" "$HOME/"
 rm -r "$TMP_DOTFILES_DIR"
 eval "$CMD config status.showUntrackedFiles no"
 
+TMUX_DIR="$HOME/.tmux"
+TMUX_URL="https://github.com/gpakosz/.tmux"
+
+mkdir -p "$TMUX_DIR"
+if [ -d "$TMUX_DIR/.git" ]
+then
+	git -C "$TMUX_DIR" pull
+else
+	git clone "$TMUX_URL" "$TMUX_DIR"
+fi
+
+ln -s -f .tmux/.tmux.conf
+
 PLUGIN_CALL_FILE="$HOME/.config/nvim/plugins.vim"
 PLUGIN_MANAGER_DIR="$HOME/.config/nvim/bundle/Vundle.vim"
 PLUGIN_MANAGER_URL="https://github.com/VundleVim/Vundle.vim.git"
