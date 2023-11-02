@@ -368,6 +368,13 @@ bind -T off F9 \
 
 bind-key S-Left swap-window -t -1\; select-window -t -1
 bind-key S-Right swap-window -t +1\; select-window -t +1
+
+# Remove SSH_AUTH_SOCK to disable tmux automatically resetting the variable
+set -g update-environment "DISPLAY SSH_ASKPASS SSH_AGENT_PID \
+                             SSH_CONNECTION WINDOWID XAUTHORITY"
+
+# Use a symlink to look up SSH authentication
+setenv -g SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
 # if you don't want Oh my tmux! to alter a binding, use #!important
 # bind v new-window -c #{pane_current_path} #!important
 

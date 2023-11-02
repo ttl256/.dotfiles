@@ -10,7 +10,7 @@ LOG_FILE="$HOME/deploy_dotfiles_$(date +%Y%m%d_%T | tr -d ":").log"
 touch $LOG_FILE
 
 i=0
-max_parallel=10
+max_parallel=50
 current_parallel=0
 for device in $DEVICES; do
 	i=$((i+1))
