@@ -104,6 +104,9 @@ set imsearch=0
 " NERDTree
 let NERDTreeShowHidden=1
 
+" Undotree
+let g:undotree_WindowLayout=2
+
 " CtrlP
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlPMixed'

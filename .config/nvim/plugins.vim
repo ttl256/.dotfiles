@@ -15,6 +15,9 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'preservim/nerdcommenter'
 Plugin 'tomasiser/vim-code-dark'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'mbbill/undotree'
+Plugin 'vim-airline/vim-airline'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required

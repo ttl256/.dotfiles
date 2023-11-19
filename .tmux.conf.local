@@ -344,6 +344,9 @@ set -g history-limit 30000
 # start with mouse mode enabled
 set -g mouse on
 
+# don't jump in the end of the screen after copying
+unbind -T copy-mode-vi MouseDragEnd1Pane
+
 # force Vi mode
 #   really you should export VISUAL or EDITOR environment variable, see manual
 #set -g status-keys vi
