@@ -23,6 +23,11 @@ function efind { find $1 -type f -exec grep -E -inH --color=auto $2 {} + 2> /dev
 function tping { ping "$@" | while read pong; do echo "$(date +'%T'): $pong"; done }
 function tping6 { ping6 "$@" | while read pong; do echo "$(date +'%T'): $pong"; done }
 
+alias bsp="birdc show protocol"
+alias bsp6="birdc6 show protocol"
+alias bsr="birdc show route"
+alias bsr6="birdc6 show route"
+
 function ifconfig {
 PYTHON_ARG="$@" python3 - <<END
 import os

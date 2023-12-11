@@ -35,3 +35,4 @@ for device in $DEVICES; do
 done
 wait
 echo "All done"
+echo "Log file: $LOG_FILE"
