@@ -33,6 +33,8 @@ alias bsp6="birdc6 show protocol"
 alias bsr="birdc show route"
 alias bsr6="birdc6 show route"
 
+alias ctree="tree --filesfirst -I __pycache__"
+
 function ifconfig {
 PYTHON_ARG="$@" python3 - <<END
 import os
@@ -189,6 +191,68 @@ ssh() {
     else
         command ssh "$@"
     fi
+}
+
+gosandbox() {
+    name=${1:-"go-sandbox-$(date +%Y%m%d-%H%M%S)"}
+    dir="${HOME}/go/src/sandbox/${name}"
+    mkdir -p "$dir"
+
+    echo "//nolint:forbidigo //let me be
+package main
+
+import \"fmt\"
+
+func main() {
+\tfmt.Println(\"Hello, Go Sandbox!\")
+}
+
+func Dummy() {}
+" > "$dir/main.go"
+
+    echo "package main_test
+
+import (
+\t\"testing\"
+\tsb \"ttl256.me/ttl256/sandbox\"
+)
+
+func TestDummy(t *testing.T) {
+\tsb.Dummy() // TODO: Add your tests here
+}
+" > "$dir/main_test.go"
+
+    echo "# Makefile for Go sandbox
+
+.PHONY: run build test clean
+
+run:
+\tgo run main.go
+
+build:
+\tgo build -o app main.go
+
+test:
+\tgo test -v ./...
+
+bench:
+\tgo test -bench=. ./...
+
+cover:
+\tgo test -cover ./...
+
+clean:
+\trm -f app
+" > "$dir/Makefile"
+
+    modname="ttl256.me/ttl256/sandbox"
+
+    pushd "$dir" > /dev/null && go mod init "$modname" > /dev/null 2>&1 && popd > /dev/null
+
+    echo "Go sandbox created at $dir"
+    echo "Opening in VS Code..."
+
+    code "$dir" "$dir/main.go"
 }
 
 alias cfg='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
