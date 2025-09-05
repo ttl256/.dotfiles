@@ -21,13 +21,17 @@ setopt hist_verify
 # To see all history with timestamps call "history -E 0" or "history -i 0" for ISO8601 format
 setopt extended_history
 
-# Correction for mistyped commands
-setopt correct
-setopt correct_all
+# Disable correction for mistyped commands
+setopt nocorrectall
 
 setopt autocd
 unsetopt beep
 bindkey -v
+
+# Edit line in editor
+autoload -z edit-command-line
+zle -N edit-command-line
+bindkey "^X^E" edit-command-line
 
 #
 # GIT/VCS INTEGRATION #

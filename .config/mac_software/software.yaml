@@ -1,0 +1,12 @@
+- name: PuntoSwitcher
+  description: Switch input languages
+- name: AltTab
+  description: Alt-Tab with preview and mouse following focus. Useful with multiple displays
+- name: Alfred
+  description: Search your Mac and the web, and be more productive with custom actions to control your Mac
+- name: Amphetamine
+  description: Keep Macbook awake in clamshell mode. Useful with Apple silicon chips and external displays. Without the app it's impossible to wake up an external monitor
+- name: AlDente
+  description: The ALL-IN-ONE charge Limiter App for MacBooks. Saves battery life. Plug in power in a MacBook, the app will allow charging up to 80%, then will disconnect power from the battery and allow it to drain to 20%
+- name: BlackHole
+  description: Creates a loopback audio device. Allows to record system sound with OBS
