@@ -3,9 +3,9 @@ nmap <silent> <backspace> :nohlsearc<cr>
 " Back to normal mode
 imap jj <esc>
 " Yank to system clipboard
-vnoremap <silent> <leader>y :w !pbcopy<cr><cr>
+vnoremap <silent> <leader>y "*y
 " Paste from system clipboard
-map <silent> <leader>v :r !pbpaste<cr>
+map <silent> <leader>v "*p
 " Go to pane in split window
 map <c-h> <C-w>h
 map <c-j> <C-w>j
