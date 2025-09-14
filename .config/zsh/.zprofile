@@ -12,6 +12,8 @@ export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 type pyenv &> /dev/null && eval "$(pyenv init -)"
 
+[ -d "/Applications/Visual Studio Code.app/Contents/Resources/app/bin" ] && export PATH="/Applications/Visual Studio Code.app/Contents/Resources/app/bin:$PATH"
+
 export HISTTIMEFORMAT="[%F %T] "
 
 [ -f $ZDOTDIR/specific_profile ] && source $ZDOTDIR/specific_profile
