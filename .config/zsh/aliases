@@ -67,65 +67,72 @@ mdig () {
 }
 
 gosandbox() {
-    name=${1:-"go-sandbox-$(date +%Y%m%d-%H%M%S)"}
-    dir="${HOME}/tmp/gosandbox/${name}"
-    mkdir -p "$dir"
+	name=${1:-"go-sandbox-$(date +%Y%m%d-%H%M%S)"}
+	dir="${HOME}/tmp/gosandbox/${name}"
+	mkdir -p "$dir"
+	pushd "$dir" > /dev/null
 
-    echo "//nolint:forbidigo //let me be
-package main
+	read -r -d '' data <<- EOF
+	//nolint:forbidigo //let me be
+	package main
 
-import \"fmt\"
+	import "fmt"
+	
+	func main() {
+	\tfmt.Println("Hello, Go Sandbox!")
+	}
 
-func main() {
-\tfmt.Println(\"Hello, Go Sandbox!\")
-}
+	func Dummy() {}
+	EOF
+	echo -e "$data" > "main.go"
 
-func Dummy() {}
-" > "$dir/main.go"
+	read -r -d '' data <<- EOF
+	package main_test
 
-    echo "package main_test
+	import (
+	\t"testing"
+	\tsb "ttl256.me/ttl256/sandbox"
+	)
 
-import (
-\t\"testing\"
-\tsb \"ttl256.me/ttl256/sandbox\"
-)
+	func TestDummy(t *testing.T) {
+	\tsb.Dummy() // TODO: Add your tests here
+	}
+	EOF
+	echo -e "$data" > "main_test.go"
 
-func TestDummy(t *testing.T) {
-\tsb.Dummy() // TODO: Add your tests here
-}
-" > "$dir/main_test.go"
+	read -r -d '' data <<- EOF
+	# Makefile for Go sandbox
 
-    echo "# Makefile for Go sandbox
+	.PHONY: run build test clean
 
-.PHONY: run build test clean
+	run:
+	\tgo run main.go
 
-run:
-\tgo run main.go
+	build:
+	\tgo build -o main main.go
 
-build:
-\tgo build -o app main.go
+	test:
+	\tgo test -v ./...
 
-test:
-\tgo test -v ./...
+	bench:
+	\tgo test -bench=. ./...
 
-bench:
-\tgo test -bench=. ./...
+	cover:
+	\tgo test -cover ./...
 
-cover:
-\tgo test -cover ./...
+	clean:
+	\trm -f main
+	EOF
+	echo -e "$data" > "Makefile"
 
-clean:
-\trm -f app
-" > "$dir/Makefile"
+	modname="ttl256.me/ttl256/sandbox"
+	go mod init "$modname"
 
-    modname="ttl256.me/ttl256/sandbox"
+	popd > /dev/null
+	echo "Go sandbox created at $dir"
+	echo "Opening in VS Code..."
 
-    pushd "$dir" > /dev/null && go mod init "$modname" > /dev/null 2>&1 && popd > /dev/null
-
-    echo "Go sandbox created at $dir"
-    echo "Opening in VS Code..."
-
-    code "$dir" "$dir/main.go"
+	code "$dir" "$dir/main.go"
 }
 
 alias cfg='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
