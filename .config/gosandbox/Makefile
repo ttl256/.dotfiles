@@ -21,7 +21,3 @@ cover:
 
 clean:
 	rm -f main
-
-install-golangci-lint:
-	curl -sSfL "https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh" | sh -s -- -b $(GOTOOLS_DIR) $(GOLANGCILINT_VERSION)
-	ln $(GOTOOLS_DIR)/golangci-lint{,-v2}
