@@ -51,12 +51,12 @@ mdig () {
 }
 
 gosandbox() {
-	local name=${1:-"$(date -u +%Y-%m-%dT%H:%M:%SZ)"}
+	local name=${1:-"$(date -u +%Y%m%d_%H%M%S)"}
 	local dir="${HOME}/tmp/gosandbox/${name}"
 	local templates_dir="${XDG_CONFIG_HOME:-$HOME/.config}/gosandbox"
 	mkdir -p "$dir"
 
-	cp -R "$templates_dir"/* "$dir" > /dev/null
+	tar -cf - -C "$templates_dir" . | tar -xf - -C "$dir"
 
 	pushd "$dir" > /dev/null
 	go mod init "ttl256.me/ttl256/sandbox" &> /dev/null || { echo "go mod init" && return 1; }
