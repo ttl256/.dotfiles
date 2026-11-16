@@ -34,6 +34,12 @@ alias bsp6="birdc6 show protocol"
 alias bsr="birdc show route"
 alias bsr6="birdc6 show route"
 
+if [[ "$OSTYPE" == darwin* ]]; then
+	mtr() {
+		sudo mtr "$@"
+	}
+fi
+
 alias ctree="tree --filesfirst -I __pycache__"
 
 mdig () {
